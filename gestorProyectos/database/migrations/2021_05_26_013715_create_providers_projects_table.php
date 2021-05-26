@@ -16,9 +16,10 @@ class CreateProvidersProjectsTable extends Migration
         Schema::create('providers_projects', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('provider_id');
-            $table->foreign('provider_id')->references('id')->on('providers');
+            $table->foreign('provider_id')->references('id')->on('providers');   
             $table->unsignedBigInteger('project_id');
-            
+            $table->foreign('project_id')->references('id')->on('projects');     
+           
         });
     }
 

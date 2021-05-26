@@ -16,7 +16,9 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();            
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories');        
+            $table->unsignedBigInteger('tracing_id');
+            $table->foreign('tracing_id')->references('id')->on('tracing');            
             $table->string('code');
             $table->string('name');
             $table->string('area');
@@ -37,3 +39,4 @@ class CreateProjectsTable extends Migration
         Schema::dropIfExists('projects');
     }
 }
+
