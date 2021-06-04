@@ -21,7 +21,7 @@ class AlterUsersTable extends Migration
             $table->string('address')->after('gender');
             $table->string('photo')->default('imgs/no-photo.png')->after('address');
             $table->string('role')->default('Customer')->after('photo');
-            $table->boolean('state')->default(1)->after('role');    
+            $table->string('state')->after('role');    
            
         });
     }
