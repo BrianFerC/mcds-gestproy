@@ -22,26 +22,44 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+        /* return [
+            'fullname'          => $this->faker->name,
+            'email'             => $this->faker->unique()->safeEmail,
+            'phone'             => $this->faker->randomNumber($nbDigits = NULL, $strict = false),
+            'birthdate'         => $this->faker->date,
+            'gender'            => $this->faker->randomElement($array = array('Female', 'Male')),
+            'address'           => $this->faker->streetAddress,
+            'role'              => 'Editor',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-        ];
-    }
+            'password'          => bcrypt('editor'), 
+            'remember_token'    => Str::random(10),
+        ]; */
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
+        $gender = $this->faker->randomElement($array = array('Female', 'Male'));
+        $photo  = $this->faker->image('public/imgs', 140, 140, 'people');
+        // lorempixel => placeholder.com
+
+        if ($gender == 'Female') {
+            $name = $this->faker->firstNameFemale();
+        } else {
+            $name = $this->faker->firstNameMale();
+        }
+
+        return [
+            'names'          => $name . ' ' . $this->faker->lastname(),
+            'email'             => $this->faker->unique()->safeEmail,
+            'phone'             => $this->faker->numberBetween($min = 3101000000, $max = 3202000000 ),
+            'birthdate'         => $this->faker->dateTimeBetween($starDate = '-60 years', $endDate = '-22 years'),
+            //'birthdate'         => $this->faker->dateTimeBetween('1960-01-01', '1999-12-31'),
+            'gender'            => $gender,
+            'address'           => $this->faker->streetAddress,
+            'photo'             => substr($photo, 7),
+            'role'              => 'Leader',
+            'state'            => 'Activo',
+            'email_verified_at' => now(),
+            'password'          => bcrypt('leader'), 
+            'remember_token'    => Str::random(10),
+        ];
+
     }
 }

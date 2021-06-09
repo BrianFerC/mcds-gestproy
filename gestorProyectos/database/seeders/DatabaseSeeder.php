@@ -17,14 +17,15 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            //CategorySeeder::class,
-            //ProjectSeeder::class,
-            //Project_userSeeder::class,
-            //ProviderSeeder::class,
-            //Provider_projectSeeder::class,
-            //TracingSeeder::class,
+            CategorySeeder::class,
+            ProjectSeeder::class,
+            //TracingSeeder::class,                     
+            Project_userSeeder::class,
+            ProviderSeeder::class,
+            Provider_projectSeeder::class,
+            
         ]);
 
-        // \App\Models\User::factory(10)->create();
+         \App\Models\User::factory(10)->create();
     }
 }

@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'gender'    => 'Male',
             'address'   => 'Avenida Caracas',
             'role'      => 'Admin',
+            'state'      => 'Activo',
             'password'  => bcrypt('admin'),
         ]);
 
@@ -38,6 +39,7 @@ class UserSeeder extends Seeder
         $user->gender    = 'Female';
         $user->address   = 'Avenida Circunvalar';
         $user->role      = 'Leader';
+        $user->state      = 'Activo';
         $user->password  = bcrypt('leader');
         $user->save();
     }
