@@ -24,6 +24,7 @@ class CreateProjectsTable extends Migration
             $table->string('area');
             $table->string('class');
             $table->text('description');
+            $table->string('budget');
             $table->string('state');
             $table->timestamps();
         });

@@ -25,6 +25,7 @@ class ProjectSeeder extends Seeder
     $pr->area        = "Produccion";
     $pr->class        = "Sistema de Informacion";
     $pr->description  = "Framework:Laravel, Servidor: Xampp, Base de datos: phpMyAdmin";
+    $pr->budget        = 65000000;
     $pr->state        = "Activo";
     $pr->save();
 
@@ -37,6 +38,7 @@ class ProjectSeeder extends Seeder
     $pr->area        = "Administrativo";
     $pr->class        = "Sistema de Informacion";
     $pr->description  = "Framework:Bootstrap, Servidor: Xampp, Base de datos: phpMyAdmin";
+    $pr->budget        = 110000000;
     $pr->state        = "Activo";
     $pr->save();
 
