@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');        
             $table->unsignedBigInteger('tracing_id');
-            $table->foreign('tracing_id')->references('id')->on('tracing');            
+            $table->foreign('tracing_id')->references('id')->on('tracings');            
             $table->string('code');
             $table->string('name');
             $table->string('area');

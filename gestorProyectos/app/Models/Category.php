@@ -13,4 +13,17 @@ class Category extends Model
         'name',
         'description'       
     ];
+
+    public function projects() {
+        return $this->hasMany('App\Models\Project');
+    }
+
+    public function scopeNames($categories, $q)
+    {
+        if (trim($q)) {
+            $categories->where('name', 'LIKE', "%$q%")
+            ->orWhere('description', 'LIKE', "%$q%");
+        }
+    }
+
 }

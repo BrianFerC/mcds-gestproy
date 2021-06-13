@@ -18,5 +18,28 @@ class Project extends Model
         'description',
         'state'
     ];
-        
+       
+    public function category() {
+        return $this->belongsTo('App\Models\Category');
+    }
+    
+    public function tracing() {
+        return $this->belongsTo('App\Models\Tracing');
+    }
+
+    public function providers_projects() {
+        return $this->hasMany('App\Models\Provider_Project');
+    }
+
+    public function projects_users() {
+        return $this->hasMany('App\Models\Project_User');
+    }
+
+    public function scopeNames($projects, $q)
+    {
+        if (trim($q)) {
+            $projects->where('name', 'LIKE', "%$q%")
+            ->orWhere('description', 'LIKE', "%$q%");
+        }
+    }
 }

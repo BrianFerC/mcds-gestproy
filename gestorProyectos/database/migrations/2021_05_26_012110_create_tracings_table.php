@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTracingTable extends Migration
+class CreateTracingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateTracingTable extends Migration
      */
     public function up()
     {
-        Schema::create('tracing', function (Blueprint $table) {
+        Schema::create('tracings', function (Blueprint $table) {
             $table->id();
+            $table->date('birthdate');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateTracingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tracing');
+        Schema::dropIfExists('tracings');
     }
 }

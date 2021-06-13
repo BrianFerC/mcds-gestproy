@@ -47,4 +47,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-}
+
+    public function projects() {
+        return $this->hasMany('App\Models\Project');
+    }
+
+    public function scopeNames($users, $q) {
+        if (trim($q)) {
+            $users->where('names', 'LIKE', "%$q%")
+                  ->orWhere('email', 'LIKE', "%$q%");
+        }
+    }
+
+    }

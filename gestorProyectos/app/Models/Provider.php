@@ -15,5 +15,17 @@ class Provider extends Model
        
         
     ];
+
+    public function providers_projects() {
+        return $this->hasMany('App\Models\Provider_Project');
+    }
+
+    public function scopeNames($providers, $q)
+    {
+        if (trim($q)) {
+            $providers->where('name_provider', 'LIKE', "%$q%")
+            ->orWhere('name_contact', 'LIKE', "%$q%");
+        }
+    }
 }
 

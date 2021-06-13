@@ -15,7 +15,7 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {  
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0;'); // Desactivamos la revisión de claves foráneas
+                
     // Metodo ORM
     $pr = new Project;
     $pr->category_id = 1;
