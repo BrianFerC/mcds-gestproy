@@ -1,4 +1,4 @@
-<h1>{{ $user->fullname }}</h1>
+<h1>{{ $user->names }}</h1>
 <hr>
 <p>{{ $user->email}}</p>
 <p>{{ $user->phone}}</p>

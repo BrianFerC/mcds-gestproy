@@ -3,81 +3,161 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    {{-- favicon --}}
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('favicon/manifest.json') }}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
+    <meta name="theme-color" content="#ffffff">
+    <title>@yield('title')</title>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fontawesome-all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet">
+
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    @include('layouts.navbar')
+    <main class="container mt-5">
+        @yield('content')
+    </main>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/sweetalert2@9.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+    <script>
+        $(document).ready(function() {
+            /* - - - - - - - - - - - - - - - - - - */
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                responsive:{
+                    0:{
+                        items: 1
+                    },
+                    600:{
+                        items: 2
+                    },
+                    1000:{
+                        items: 3
+                    }
+                }
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            $('.btn-upload').click(function() {
+                $('#photo').click();
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            $('.btn-file').click(function() {
+                $('#file').click();
+            });
+            $('#file').change(function(event) {
+                $(this).parent().submit();
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            $('#photo').change(function(event) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    $('#preview').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            @if (session('message'))
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{ session('message') }}',
+                    showConfirmButton: false,
+                    timer: 2500
+                    });
+            @endif
+            /* - - - - - - - - - - - - - - - - - - */
+            @if (session('error'))
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: '{{ session('error') }}',
+                    showConfirmButton: false,
+                    timer: 4000
+                    });
+            @endif
+            /* - - - - - - - - - - - - - - - - - - */
+            $('body').on('click', '.btn-delete', function() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1e5f74',
+                    cancelButtonColor: '#d0211c',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                    if (result.value) {
+                        $(this).parent().submit();
+                    }
+                    });
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            $('body').on('keyup', '#qsearch', function(event) {
+                event.preventDefault();
+                $q = $(this).val();
+                $t = $('input[name=_token]').val();
+                $m = $('#tmodel').val();
 
-                    </ul>
+                $('.loader').removeClass('d-none');
+                $('.table').hide();
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+                $sto = setTimeout(function() {
+                    clearTimeout($sto);
+                    $.post($m+"/search", {q: $q, _token: $t},
+                        function (data) {
+                              $('.loader').addClass('d-none');
+                              $('#content').html(data); 
+                              $('.table').fadeIn('slow'); 
+                        }
+                    );
+                }, 2000);
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            $('body').on('change', '#idcat', function(event) {
+                event.preventDefault();
+                $idcat = $(this).val();
+                $tk    = $('input[name=_token]').val();
+                $('.loader').removeClass('d-none');
+                $('#content').hide();
+                $sto = setTimeout(function() {
+                    clearTimeout($sto);
+                    $.post('gamesbycat', { 
+                        idcat:  $idcat,
+                        _token: $tk }, function(data) {
+                        $('.loader').addClass('d-none');
+                        $('#content').html(data).fadeIn('slow');
+                    });
+                },1600);
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+        });
+    </script>
 </body>
 </html>
