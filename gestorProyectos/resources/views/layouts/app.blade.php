@@ -148,7 +148,7 @@
                 $('#content').hide();
                 $sto = setTimeout(function() {
                     clearTimeout($sto);
-                    $.post('gamesbycat', { 
+                    $.post('projectsbycat', { 
                         idcat:  $idcat,
                         _token: $tk }, function(data) {
                         $('.loader').addClass('d-none');

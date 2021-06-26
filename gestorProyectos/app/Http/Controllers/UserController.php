@@ -108,14 +108,14 @@ class UserController extends Controller
         $user->phone     = $request->phone;
         $user->birthdate = $request->birthdate;
         $user->gender    = $request->gender;
-        $user->address   = $request->address;
-        $user->state   = $request->state;
+        $user->address   = $request->address;        
         if ($request->hasFile('photo')) {
             $file = time() . '.' . $request->photo->extension();
             $request->photo->move(public_path('imgs'), $file);
             $user->photo = 'imgs/' . $file;
         }
         $user->role      = $request->role;
+        $user->state   = $request->state;
 
         if ($user->save()) {
             return redirect('users')->with('message', 'The User: ' . $user->names . ' was successfully edited');
