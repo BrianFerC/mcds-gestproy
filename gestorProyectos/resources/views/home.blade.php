@@ -45,7 +45,7 @@
                         <div class="card">
                                 <img src="{{ asset('imgs/bg-games.svg') }}" width="240px" class="my-2 img-top-card" height="154px">
                                 <div class="card-body">
-                                    <a href="{{-- route('projects.index') --}}" class="btn btn-block btn-larapp">
+                                    <a href="{{ route('projects.index') }}" class="btn btn-block btn-larapp">
                                         <i class="fas fa-globe"></i>
                                         Module Projects
                                     </a>

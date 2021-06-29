@@ -5,7 +5,7 @@
 @section('content')
  <div class="container">
      <div class='row'>
-         <div class="col-md-12 offset-md-1">
+         <div class="col-md-10 offset-md-1">
              <h1><i class="fas fa-users"></i>Modulo Users</h1>
              <hr>
              <a href="{{ route('users.create') }}" class="btn btn-success">
@@ -34,7 +34,7 @@
                 <table class="table table-striped table-border">
                     <thead>
                         <tr>
-                            <th>names</th>
+                            <th>Names</th>
                             <th>Email</th>
                             <th>Photo</th>
                             <th>Role</th>
