@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $catgs = Category::paginate(20);
+        $catgs = Category::paginate(10);
         return view('categories.index')->with('catgs', $catgs);
     }
 

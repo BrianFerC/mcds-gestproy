@@ -99,6 +99,7 @@ Route::post('tracings/search', [TracingController::class, 'search']);
 
 // Export PDF
 Route::get('export/users/pdf', [UserController::class, 'pdf']);
+Route::get('export/projects/pdf', [ProjectController::class, 'pdf']);
 
 Route::get('export/users/excel', [UserController::class, 'excel']);
 // Imports

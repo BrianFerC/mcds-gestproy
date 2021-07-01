@@ -39,7 +39,7 @@ class Project extends Model
     {
         if (trim($q)) {
             $projects->where('name', 'LIKE', "%$q%")
-            ->orWhere('description', 'LIKE', "%$q%");
+                     ->orWhere('code', 'LIKE', "%$q%");
         }
     }
 }
