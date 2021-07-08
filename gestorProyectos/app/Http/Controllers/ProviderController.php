@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Provider;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProviderRequest;
+
+
+
 
 class ProviderController extends Controller
 {
@@ -14,7 +18,8 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        //
+        $providers = Provider::paginate(50);
+        return view('providers.index')->with('prov', $providers);
     }
 
     /**
@@ -24,7 +29,7 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        //
+        return view('providers.create');
     }
 
     /**
@@ -33,9 +38,16 @@ class ProviderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProviderRequest $request)
     {
-        //
+        $provider = new Provider;
+        $provider->name_provider = $request->name_provider;
+        $provider->name_contact  = $request->name_contact;
+        $provider->image_provider= $request->image_provider;
+        if ($provider->save()) {
+            return redirect('providers')->with('message', 'The Provider: ' . $provider->name_provider . ' was successfully added');
+        }
+
     }
 
     /**
@@ -44,9 +56,9 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function show(Provider $provider)
+    public function show(Provider $prov)
     {
-        //
+        return view('providers.show')->with('prov', $prov);
     }
 
     /**
@@ -55,9 +67,12 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function edit(Provider $provider)
+    public function edit(Provider $prov)
     {
-        //
+        $prov = Category::all();
+        $tracing = Tracing::all();
+        return view('providers.edit')->with('prov', $prov);
+
     }
 
     /**
@@ -67,9 +82,13 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Provider $provider)
+    public function update(ProviderRequestRequest $request, Provider $prov)
     {
-        //
+        $prov->name_provider = $request->name_provider;
+        $prov->name_contact = $request->name_contact;
+        if ($prov->save()) {
+            return redirect('providers')->with('message', 'The Provider: ' . $prov->name_provider . ' was successfully edited');
+        }
     }
 
     /**
@@ -78,8 +97,14 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Provider $provider)
+    public function destroy(Provider $prov)
     {
-        //
+        if ($provider->delete()) {
+            return redirect('providers')->with('message', 'The Provider: ' . $project->name_provider . ' was successfully deleted');
+        }
+    }
+    public function search(Request $request) {
+        $provs = Provider::names($request->q)->orderBy('id', 'DESC')->paginate(20);
+        return view('providers.search')->with('prov', $projects);
     }
 }

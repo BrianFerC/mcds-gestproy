@@ -16,6 +16,7 @@ class CreateProvidersTable extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->string('name_provider')->unique();
+            $table->string('image_provider')->default('imgs/no-provider.png');
             $table->string('name_contact')->unique();
             $table->timestamps();
         });
