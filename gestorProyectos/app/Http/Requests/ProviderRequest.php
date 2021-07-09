@@ -26,14 +26,14 @@ class ProviderRequest extends FormRequest
         if ($this->method() == 'PUT') {
             return [
                 'name_provider'   => 'required|unique:providers|name_provider'.$this->id,
-                'image_provider'    => 'required',
                 'name_contact'    => 'required',
             ];
         } else {
             return [
                 'name_provider'   => 'required|unique:providers',
-                'image_provider'  => 'required',
                 'name_contact'    => 'required',
+                'photo'           => 'required|image|max:2000',
+                
             ];
         }
     }

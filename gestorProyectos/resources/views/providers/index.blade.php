@@ -25,13 +25,15 @@
                     <thead>
                         <th>Name Provider</th>
                         <th>Name Contact</th>
+                        <th>Image Provider</th>
                         <th>Actions</th>
                     </thead>
                     <tbody id="content">
-                        @foreach ($prov as $provider)
+                        @foreach ($providers as $provider)
                             <tr>
                                 <td>{{ $provider->name_provider }}</td>
                                 <td>{{ $provider->name_contact }}</td>
+                                <td><img src="{{ asset($provider->image_provider) }}" width="36px" class="img-thumbnail"></td>
                                 <td>
                                     <a href="{{ url('providers/'.$provider->id) }}" class="btn btn-sm btn-larapp">
                                         <i class="fas fa-search"></i>
@@ -51,7 +53,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $prov->links() }}
+                {{ $providers->links() }}
             </div>
         </div>
     </div>
