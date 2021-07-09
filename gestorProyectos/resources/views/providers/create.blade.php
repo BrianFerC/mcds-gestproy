@@ -54,21 +54,6 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="text-center my-3">
-                                <img src="{{ asset('imgs/no-provider.png') }}" width="120px" id="preview" class="img-thumbnail rounded-circle">
-                            </div>
-                            <button type="button" class="btn btn-block btn-secondary btn-upload">
-                                <i class="fas fa-upload"></i>
-                                Upload Photo
-                            </button>
-                            <input id="photo" type="file" class="form-control d-none @error('photo') is-invalid @enderror" name="photo" accept="image/*">
-                            @error('photo')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
                                 <div class="text-center my-3">
                                     <img src="{{ asset('imgs/no-provider.png') }}" width="120px" id="preview" class="img-thumbnail">
                                 </div>
@@ -77,17 +62,16 @@
                                     Upload Provider Image
                                 </button>
                                 <input id="image_provider" type="file" class="form-control d-none @error('image_provider') is-invalid @enderror" name="image_provider" accept="image/*">
-                                @error('image_provider')
+                                <input id="photo" type="file" class="form-control d-none @error('photo') is-invalid @enderror" name="photo" accept="image/*">
+                            @error('image_provider')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
+                            @enderror
                         </div>
-
-
                         @csrf
                         <div class="form-group">
-                            <input id="name_contact" type="text" class="form-control @error('name_contact') is-invalid @enderror" name="name_provider" value="{{ old('name_contact') }}" placeholder="Name Contact" autofocus>
+                            <input id="name_contact" type="text" class="form-control @error('name_contact') is-invalid @enderror" name="name_contact" value="{{ old('name_contact') }}" placeholder="Name Contact" autofocus>
 
                             @error('name_contact')
                             <span class="invalid-feedback" role="alert">
@@ -100,7 +84,7 @@
                                     <i class="fas fa-save"></i>
                                     Add
                                 </button>
-                                <a href="{{ route('categories.index') }}" class="btn btn-block btn-secondary text-uppercase">
+                                <a href="{{ route('providers.index') }}" class="btn btn-block btn-secondary text-uppercase">
                                     <i class="fas fa-arrow-left"></i>
                                     Cancel
                                 </a>

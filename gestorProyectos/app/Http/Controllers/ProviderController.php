@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProviderRequest;
-
-
-
+use PDF;
+use App\Exports\UserExport;
+use App\Imports\UserImport;
 
 class ProviderController extends Controller
 {
@@ -18,8 +18,8 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        $providers = Provider::paginate(50);
-        return view('providers.index')->with('prov', $providers);
+        $providers = Provider::paginate(20);
+        return view('providers.index')->with('providers', $providers);
     }
 
     /**
@@ -43,7 +43,13 @@ class ProviderController extends Controller
         $provider = new Provider;
         $provider->name_provider = $request->name_provider;
         $provider->name_contact  = $request->name_contact;
-        $provider->image_provider= $request->image_provider;
+        if ($request->hasFile('photo')) {
+            $file = time() . '.' . $request->image_provider->extension();
+            $request->image_provider->move(public_path('imgs'), $file);
+            $provider->photo = 'imgs/' . $file;
+        }
+
+
         if ($provider->save()) {
             return redirect('providers')->with('message', 'The Provider: ' . $provider->name_provider . ' was successfully added');
         }
@@ -69,10 +75,7 @@ class ProviderController extends Controller
      */
     public function edit(Provider $prov)
     {
-        $prov = Category::all();
-        $tracing = Tracing::all();
         return view('providers.edit')->with('prov', $prov);
-
     }
 
     /**
@@ -82,10 +85,15 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function update(ProviderRequestRequest $request, Provider $prov)
+    public function update(ProviderRequest $request, Provider $prov)
     {
         $prov->name_provider = $request->name_provider;
         $prov->name_contact = $request->name_contact;
+        if ($request->hasFile('photo')) {
+            $file = time() . '.' . $request->image_provider->extension();
+            $request->image_provider->move(public_path('imgs'), $file);
+            $provider->photo = 'imgs/' . $file;
+        }
         if ($prov->save()) {
             return redirect('providers')->with('message', 'The Provider: ' . $prov->name_provider . ' was successfully edited');
         }
@@ -105,6 +113,22 @@ class ProviderController extends Controller
     }
     public function search(Request $request) {
         $provs = Provider::names($request->q)->orderBy('id', 'DESC')->paginate(20);
-        return view('providers.search')->with('prov', $projects);
+        return view('providers.search')->with('prov', $provs);
     }
+    public function pdf() {
+        $provides = Provider::all();
+        $pdf = PDF::loadView('providers.pdf', compact('providers'));
+        return $pdf->download('allproviders.pdf');
+    }
+
+    public function excel() {
+        return \Excel::download(new ProviderExport, 'allproviders.xlsx');
+    }
+
+    public function import(Request $request) {
+        $file = $request->file('file');
+        \Excel::import(new ProviderImport, $file);
+        return redirect()->back()->with('message', 'Provedores importados con exito!');
+    }
+
 }
