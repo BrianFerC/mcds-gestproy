@@ -29,7 +29,7 @@
                         <th>Actions</th>
                     </thead>
                     <tbody id="content">
-                        @foreach ($providers as $provider)
+                        @foreach ($prov as $provider)
                             <tr>
                                 <td>{{ $provider->name_provider }}</td>
                                 <td>{{ $provider->name_contact }}</td>
@@ -53,7 +53,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $providers->links() }}
+                {{ $prov->links() }}
             </div>
         </div>
     </div>

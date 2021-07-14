@@ -61,8 +61,7 @@
                                     <i class="fas fa-upload"></i>
                                     Upload Provider Image
                                 </button>
-                                <input id="image_provider" type="file" class="form-control d-none @error('image_provider') is-invalid @enderror" name="image_provider" accept="image/*">
-                                <input id="photo" type="file" class="form-control d-none @error('photo') is-invalid @enderror" name="photo" accept="image/*">
+                                <input id="photo" type="file" class="form-control d-none @error('image_provider') is-invalid @enderror" name="image_provider" accept="image/*">
                             @error('image_provider')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

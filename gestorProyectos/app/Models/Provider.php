@@ -11,9 +11,7 @@ class Provider extends Model
 
     protected $fillable = [
         'name_povider',
-        'name_contact'
-       
-        
+        'name_contact',
     ];
 
     public function providers_projects() {

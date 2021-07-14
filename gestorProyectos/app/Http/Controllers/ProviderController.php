@@ -18,8 +18,8 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        $providers = Provider::paginate(20);
-        return view('providers.index')->with('providers', $providers);
+        $prov = Provider::paginate(20);
+        return view('providers.index')->with('prov', $prov);
     }
 
     /**
@@ -40,17 +40,19 @@ class ProviderController extends Controller
      */
     public function store(ProviderRequest $request)
     {
+
+        //dd($request->all());
         $provider = new Provider;
         $provider->name_provider = $request->name_provider;
         $provider->name_contact  = $request->name_contact;
-        if ($request->hasFile('photo')) {
+        if ($request->hasFile('image_provider')) {
             $file = time() . '.' . $request->image_provider->extension();
-            $request->image_provider->move(public_path('imgs'), $file);
-            $provider->photo = 'imgs/' . $file;
+            $request->image_provider->move(public_path('imgs/imgProviders/'), $file);
+            $provider->image_provider = 'imgs/imgProviders/' . $file;
         }
 
-
         if ($provider->save()) {
+            echo "segita";
             return redirect('providers')->with('message', 'The Provider: ' . $provider->name_provider . ' was successfully added');
         }
 
@@ -89,10 +91,10 @@ class ProviderController extends Controller
     {
         $prov->name_provider = $request->name_provider;
         $prov->name_contact = $request->name_contact;
-        if ($request->hasFile('photo')) {
+        if ($request->hasFile('image_provider')) {
             $file = time() . '.' . $request->image_provider->extension();
-            $request->image_provider->move(public_path('imgs'), $file);
-            $provider->photo = 'imgs/' . $file;
+            $request->image_provider->move(public_path('imgs/imgProviders'), $file);
+            $provider->image_provider = 'imgs/imgProviders' . $file;
         }
         if ($prov->save()) {
             return redirect('providers')->with('message', 'The Provider: ' . $prov->name_provider . ' was successfully edited');
@@ -112,9 +114,9 @@ class ProviderController extends Controller
         }
     }
     public function search(Request $request) {
-        $provs = Provider::names($request->q)->orderBy('id', 'DESC')->paginate(20);
+        $provs = Provider::name_povider($request->q)->orderBy('id', 'DESC')->paginate(20);
         return view('providers.search')->with('prov', $provs);
-    }
+    } 
     public function pdf() {
         $provides = Provider::all();
         $pdf = PDF::loadView('providers.pdf', compact('providers'));

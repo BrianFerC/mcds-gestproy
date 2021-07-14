@@ -32,7 +32,7 @@ class ProviderRequest extends FormRequest
             return [
                 'name_provider'   => 'required|unique:providers',
                 'name_contact'    => 'required',
-                'photo'           => 'required|image|max:2000',
+                'image_provider'  => 'required|image|max:2000',
                 
             ];
         }
