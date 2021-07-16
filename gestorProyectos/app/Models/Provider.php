@@ -12,10 +12,11 @@ class Provider extends Model
     protected $fillable = [
         'name_povider',
         'name_contact',
+        'image_provider'
     ];
 
-    public function providers_projects() {
-        return $this->hasMany('App\Models\Provider_Project');
+    public function providers() {
+        return $this->hasMany('App\Models\Provider');
     }
 
     public function scopeNames($providers, $q)

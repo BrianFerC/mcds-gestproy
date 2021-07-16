@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ url('providers') }}"><i class="fas fa-globe"></i> Module Providers</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-search"></i> Show Provider</li>
+                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-search"></i>Show Providers</li>
                 </ol>
                 </nav>
             <div class="card">
@@ -27,13 +27,18 @@
                 <div class="card-body">
                     <table class="table table-hover table-striped">
                         <tr>
+                            <td colspan="2" class="text-center">
+                                <img src="{{ asset($providers->image_provider) }}"  width="180px" class="img-thumbnail">
+                            </td>
+                        </tr>
+                        <tr>
                             <th>Name provider:</th>
-                            <td>{{ $prov->name_provider }}</td>
+                            <td>{{ $providers->name_provider }}</td>
 
                         </tr>
                         <tr>
                             <th>Name Contact:</th>
-                            <td>{{ $prov->name_contact }}</td>
+                            <td>{{ $providers->name_contact }}</td>
                         </tr>
                     </table>
                 </div>

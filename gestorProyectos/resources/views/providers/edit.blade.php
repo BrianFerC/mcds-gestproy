@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Project')
+@section('title', 'Edit provider')
 
 @section('content')
 <div class="container">
@@ -12,16 +12,16 @@
                         <a href="{{ url('home') }}"><i class="fas fa-clipboard-list"></i> Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ url('projects') }}"><i class="fas fa-globe"></i> Module Projects</a>
+                        <a href="{{ url('providers') }}"><i class="fas fa-globe"></i> Module Provider</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-pen"></i> Edit Project</li>
+                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-pen"></i> Edit Provider</li>
                 </ol>
                 </nav>
             <div class="card">
                 <div class="card-header text-uppercase text-center">
                     <h5>
-                        <i class="fa fa-pen"></i> 
- 						Edit project
+                        <i class="fa fa-pen"></i>
+ 						Edit Provider
                     </h5>
                 </div>
 
@@ -39,121 +39,52 @@
                         @endif
                     </div>
                 </div> --}}
-            
+
                 <div class="card-body">
-                    <form method="POST" action="{{ url('projects/'.$project->id) }}">
+                    <form method="POST" action="{{ url('providers/'.$provider->id) }}">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" name="id" value="{{ $provider->id }}">
                         <div class="form-group">
-                                <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror">
-                                    <option value="">Select Category...</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" @if(old('category_id', $project->category_id) == $category->id) selected @endif>{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
+                            <input id="name_provider" type="text" class="form-control @error('name_provider') is-invalid @enderror" name="name_provider" value="{{ old('name_provider', $provider->name_provider) }}" placeholder="Name Provider" autofocus>
 
-                                @error('category_id')
-                                    <span class="invalid-feedback" role="alert">
+                            @error('name_provider')
+                            <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                                <select name="tracing_id" id="tracing_id" class="form-control @error('tracing_id') is-invalid @enderror">
-                                    <option value="">Select tracing...</option>
-                                    @foreach ($tracings as $tracing)
-                                        <option value="{{ $tracing->id }}" @if(old('tracing_id', $project->tracing_id) == $tracing->id) selected @endif>{{ $tracing->id }}</option>
-                                    @endforeach
-                                </select>
-
-                                @error('tracing_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                                <input id="code" type="number" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code', $project->code) }}" placeholder="Code">
-
-                                @error('code')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                                <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $project->name) }}" placeholder="Name">
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                                <input id="area" type="area" class="form-control @error('area') is-invalid @enderror" name="area" value="{{ old('area', $project->area) }}" placeholder="Area">
-
-                                @error('area')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                                <input id="class" type="class" class="form-control @error('class') is-invalid @enderror" name="class" value="{{ old('class', $project->class) }}" placeholder="Class">
-
-                                @error('class')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                                <textarea name="description" id="description" cols="30" rows="4" class="form-control @error('description') is-invalid @enderror" placeholder="Description">{{ old('description', $project->description) }}</textarea>
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                                <input id="budget" type="number" class="form-control @error('budget') is-invalid @enderror" name="budget" value="{{ old('budget', $project->budget) }}" placeholder="Budget">
-
-                                @error('budget')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <select name="state" id="state" class="form-control @error('state') is-invalid @enderror">
-                                <option value="">Select State...</option>
-                                <option value="Disponible" @if(old('state', $project->state) == 'Disponible') selected @endif>Disponible</option>
-                                <option value="No Disponible" @if(old('state', $project->state) == 'No Disponible') selected @endif>No Disponible</option>
-                            </select>
-
-                            @error('state')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
                             @enderror
-                    	</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-center my-3">
+                                <img src="{{ asset($provider->image_provider) }}" width="120px" id="preview" class="img-thumbnail">
+                            </div>
+                            <button type="button" class="btn btn-block btn-secondary btn-upload">
+                                <i class="fas fa-upload"></i>
+                                Upload Provider Image
+                            </button>
+                            <input id="photo" type="file" class="form-control d-none @error('image_provider') is-invalid @enderror" name="image_provider" accept="image/*">
+                            @error('image_provider')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <input id="name_contact" type="text" class="form-control @error('name_contact') is-invalid @enderror" name="name_contact" value="{{ old('name_contact', $provider->name_contact) }}" placeholder="Name Contact" autofocus>
 
+                            @error('name_contact')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                                 <button type="submit" class="btn btn-success btn-block text-uppercase">
-                                    <i class="fas fa-pen"></i> 
+                                    <i class="fas fa-pen"></i>
                    				Edit
                                 </button>
-                                <a href="{{ route('projects.index') }}" class="btn btn-block btn-secondary text-uppercase">
-                                	<i class="fas fa-arrow-left"></i> 
+                                <a href="{{ route('providers.index') }}" class="btn btn-block btn-secondary text-uppercase">
+                                	<i class="fas fa-arrow-left"></i>
                                 Cancel
                                 </a>
                         </div>

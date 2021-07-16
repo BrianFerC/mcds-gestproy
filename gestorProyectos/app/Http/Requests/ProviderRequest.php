@@ -25,7 +25,7 @@ class ProviderRequest extends FormRequest
     {
         if ($this->method() == 'PUT') {
             return [
-                'name_provider'   => 'required|unique:providers|name_provider'.$this->id,
+                'name_provider'   => 'required',
                 'name_contact'    => 'required',
             ];
         } else {
@@ -33,7 +33,7 @@ class ProviderRequest extends FormRequest
                 'name_provider'   => 'required|unique:providers',
                 'name_contact'    => 'required',
                 'image_provider'  => 'required|image|max:2000',
-                
+
             ];
         }
     }

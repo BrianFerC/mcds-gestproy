@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProviderRequest;
-use PDF;
-use App\Exports\UserExport;
-use App\Imports\UserImport;
+//use PDF;
+//use App\Exports\UserExport;
+//use App\Imports\UserImport;
 
 class ProviderController extends Controller
 {
@@ -18,7 +18,7 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        $prov = Provider::paginate(20);
+        $prov = Provider::paginate(30);
         return view('providers.index')->with('prov', $prov);
     }
 
@@ -52,7 +52,6 @@ class ProviderController extends Controller
         }
 
         if ($provider->save()) {
-            echo "segita";
             return redirect('providers')->with('message', 'The Provider: ' . $provider->name_provider . ' was successfully added');
         }
 
@@ -64,9 +63,10 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function show(Provider $prov)
+    public function show(Provider $provider)
     {
-        return view('providers.show')->with('prov', $prov);
+
+        return view('providers.show')->with('providers', $provider);
     }
 
     /**
@@ -75,9 +75,9 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function edit(Provider $prov)
+    public function edit(Provider $provider)
     {
-        return view('providers.edit')->with('prov', $prov);
+        return view('providers.edit')->with('provider', $provider);
     }
 
     /**
@@ -87,17 +87,17 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function update(ProviderRequest $request, Provider $prov)
+    public function update(ProviderRequest $request, Provider $provider)
     {
-        $prov->name_provider = $request->name_provider;
-        $prov->name_contact = $request->name_contact;
+        $provider->name_provider = $request->name_provider;
+        $provider->name_contact = $request->name_contact;
         if ($request->hasFile('image_provider')) {
             $file = time() . '.' . $request->image_provider->extension();
             $request->image_provider->move(public_path('imgs/imgProviders'), $file);
             $provider->image_provider = 'imgs/imgProviders' . $file;
         }
-        if ($prov->save()) {
-            return redirect('providers')->with('message', 'The Provider: ' . $prov->name_provider . ' was successfully edited');
+        if ($provider->save()) {
+            return redirect('providers')->with('message', 'The Provider: ' . $provider->name_provider . ' was successfully edited');
         }
     }
 
@@ -107,18 +107,20 @@ class ProviderController extends Controller
      * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Provider $prov)
+    public function destroy(Provider $provider)
     {
         if ($provider->delete()) {
-            return redirect('providers')->with('message', 'The Provider: ' . $project->name_provider . ' was successfully deleted');
+            return redirect('providers')->with('message', 'The Provider: ' . $provider->name_provider . ' was successfully deleted');
         }
     }
     public function search(Request $request) {
-        $provs = Provider::name_povider($request->q)->orderBy('id', 'DESC')->paginate(20);
-        return view('providers.search')->with('prov', $provs);
-    } 
+        $providers = Provider::names($request->q)->orderBy('id', 'DESC')->paginate(20);
+        return view('providers.search')->with('prov', $providers);
+
+
+    }
     public function pdf() {
-        $provides = Provider::all();
+        $providers = Provider::all();
         $pdf = PDF::loadView('providers.pdf', compact('providers'));
         return $pdf->download('allproviders.pdf');
     }
